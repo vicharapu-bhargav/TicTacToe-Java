@@ -33,9 +33,32 @@ public class TicTacToeGUI implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        
-        throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
+        JButton clicked = (JButton) e.getSource();
+
+        if (!clicked.getText().equals("")) {
+            return; // Already clicked
+        }
+
+        clicked.setText(xTurn ? "X" : "O");
+        clicked.setForeground(xTurn ? Color.BLUE : Color.RED);
+
     }
 
+    private boolean isBoardFull() {
+        for (JButton button : buttons) {
+            if (button.getText().equals("")) return false;
+        }
+        return true;
+    }
+
+    private void resetBoard() {
+        for (JButton button : buttons) {
+            button.setText("");
+            button.setForeground(Color.BLACK);
+        }
+        xTurn = true;
+    }
+
+    
    
 }
