@@ -51,12 +51,36 @@ public class TicTacToeGUI implements ActionListener {
         return true;
     }
 
+    private boolean checkWinner() {
+        String[][] combos = {
+            {text(0), text(1), text(2)},
+            {text(3), text(4), text(5)},
+            {text(6), text(7), text(8)},
+            {text(0), text(3), text(6)},
+            {text(1), text(4), text(7)},
+            {text(2), text(5), text(8)},
+            {text(0), text(4), text(8)},
+            {text(2), text(4), text(6)}
+        };
+
+        for (String[] line : combos) {
+            if (line[0].equals(line[1]) && line[1].equals(line[2]) && !line[0].equals("")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void resetBoard() {
         for (JButton button : buttons) {
             button.setText("");
             button.setForeground(Color.BLACK);
         }
         xTurn = true;
+    }
+
+    private String text(int index) {
+        return buttons[index].getText();
     }
 
     
