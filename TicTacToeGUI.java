@@ -42,6 +42,16 @@ public class TicTacToeGUI implements ActionListener {
         clicked.setText(xTurn ? "X" : "O");
         clicked.setForeground(xTurn ? Color.BLUE : Color.RED);
 
+        if (checkWinner()) {
+            JOptionPane.showMessageDialog(frame, "🎉 Player " + (xTurn ? "X" : "O") + " wins!");
+            resetBoard();
+        } else if (isBoardFull()) {
+            JOptionPane.showMessageDialog(frame, "It's a draw!");
+            resetBoard();
+        } else {
+            xTurn = !xTurn; // Switch turn
+        }
+
     }
 
     private boolean isBoardFull() {
