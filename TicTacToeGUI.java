@@ -7,19 +7,35 @@ public class TicTacToeGUI implements ActionListener {
 
     JFrame frame;
     JButton[] buttons = new JButton[9];
+    JLabel scoreLabel;
     boolean xTurn = true;
+    int xScore = 0;
+    int oScore = 0;
 
     public TicTacToeGUI() {
         frame = new JFrame("Tic Tac Toe");
-        frame.setSize(400, 400);
-        frame.setLayout(new GridLayout(3, 3));
+        frame.setSize(400, 500);
+        frame.setLayout(new BorderLayout());
+
+        // Top panel for score
+        JPanel topPanel = new JPanel();
+        scoreLabel = new JLabel("Player X: 0   |   Player O: 0");
+        scoreLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        topPanel.add(scoreLabel);
+
+        // Center panel for buttons
+        JPanel gamePanel = new JPanel();
+        gamePanel.setLayout(new GridLayout(3, 3));
 
         for (int i = 0; i < 9; i++) {
             buttons[i] = new JButton("");
             buttons[i].setFont(new Font("Arial", Font.BOLD, 60));
             buttons[i].addActionListener(this);
-            frame.add(buttons[i]);
+            gamePanel.add(buttons[i]);
         }
+
+        frame.add(topPanel, BorderLayout.NORTH);
+        frame.add(gamePanel, BorderLayout.CENTER);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
@@ -43,6 +59,11 @@ public class TicTacToeGUI implements ActionListener {
         clicked.setForeground(xTurn ? Color.BLUE : Color.RED);
 
         if (checkWinner()) {
+
+            if (xTurn) xScore++;
+            else oScore++;
+
+            updateScore();
             JOptionPane.showMessageDialog(frame, "🎉 Player " + (xTurn ? "X" : "O") + " wins!");
             resetBoard();
         } else if (isBoardFull()) {
@@ -93,6 +114,8 @@ public class TicTacToeGUI implements ActionListener {
         return buttons[index].getText();
     }
 
-    
+    private void updateScore() {
+        scoreLabel.setText("Player X: " + xScore + "   |   Player O: " + oScore);
+    }
    
 }
