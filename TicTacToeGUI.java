@@ -8,6 +8,8 @@ public class TicTacToeGUI implements ActionListener {
     JFrame frame;
     JButton[] buttons = new JButton[9];
     JLabel scoreLabel;
+    JButton resetScoreButton;
+
     boolean xTurn = true;
     int xScore = 0;
     int oScore = 0;
@@ -21,7 +23,18 @@ public class TicTacToeGUI implements ActionListener {
         JPanel topPanel = new JPanel();
         scoreLabel = new JLabel("Player X: 0   |   Player O: 0");
         scoreLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        topPanel.setLayout(new FlowLayout());
+        
+        //reset button
+        resetScoreButton = new JButton("Reset Score");
+        resetScoreButton.addActionListener(e -> {
+            xScore = 0;
+            oScore = 0;
+            updateScore();
+        });
+
         topPanel.add(scoreLabel);
+        topPanel.add(resetScoreButton);
 
         // Center panel for buttons
         JPanel gamePanel = new JPanel();
