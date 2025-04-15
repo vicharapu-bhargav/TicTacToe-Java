@@ -53,12 +53,6 @@ public class TicTacToeGUI implements ActionListener {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
-   
-
-    public static void main(String[] args) {
-        new TicTacToeGUI();
-    }
-
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -77,7 +71,7 @@ public class TicTacToeGUI implements ActionListener {
             else oScore++;
 
             updateScore();
-            JOptionPane.showMessageDialog(frame, "🎉 Player " + (xTurn ? "X" : "O") + " wins!");
+            JOptionPane.showMessageDialog(frame, "Player " + (xTurn ? "X" : "O") + " wins!");
             resetBoard();
         } else if (isBoardFull()) {
             JOptionPane.showMessageDialog(frame, "It's a draw!");
