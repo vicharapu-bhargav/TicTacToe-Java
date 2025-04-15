@@ -14,6 +14,9 @@ public class TicTacToeGUI implements ActionListener {
     int xScore = 0;
     int oScore = 0;
 
+    TicTacToeAI ai = new TicTacToeAI(); // AI instance
+    boolean vsAI = true; // Change to false for two-player
+
     public TicTacToeGUI() {
         frame = new JFrame("Tic Tac Toe");
         frame.setSize(400, 500);
@@ -64,22 +67,42 @@ public class TicTacToeGUI implements ActionListener {
             return; // Already clicked
         }
 
-        clicked.setText(xTurn ? "X" : "O");
-        clicked.setForeground(xTurn ? Color.BLUE : Color.RED);
+        clicked.setText("X");
+        clicked.setForeground(Color.BLUE);
 
-        if (checkWinner()) {
-
-            if (xTurn) xScore++;
-            else oScore++;
-
+        if (checkWinner()) 
+        {
+            xScore++;
             updateScore();
-            JOptionPane.showMessageDialog(frame, "Player " + (xTurn ? "X" : "O") + " wins!");
+            JOptionPane.showMessageDialog(frame, "Player X wins!");
             resetBoard();
-        } else if (isBoardFull()) {
+            return;
+        }
+
+        if (isBoardFull()) {
             JOptionPane.showMessageDialog(frame, "It's a draw!");
             resetBoard();
-        } else {
-            xTurn = !xTurn; // Switch turn
+            return;
+        } 
+
+        if (vsAI) {
+            int move = ai.findBestMove(getBoard(), false); // O is AI
+            if (move != -1) {
+                buttons[move].setText("O");
+                buttons[move].setForeground(Color.RED);
+                if (checkWinner()) {
+                    oScore++;
+                    updateScore();
+                    JOptionPane.showMessageDialog(frame, "🤖 AI (O) wins!");
+                    resetBoard();
+                    return;
+                }
+            }
+        }
+
+        if (isBoardFull()) {
+            JOptionPane.showMessageDialog(frame, "It's a draw!");
+            resetBoard();
         }
 
     }
@@ -111,6 +134,13 @@ public class TicTacToeGUI implements ActionListener {
         return false;
     }
 
+    private String[] getBoard() {
+        String[] board = new String[9];
+        for (int i = 0; i < 9; i++) {
+            board[i] = buttons[i].getText();
+        }
+        return board;
+    }
     private void resetBoard() {
         for (JButton button : buttons) {
             button.setText("");
